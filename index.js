@@ -57,7 +57,7 @@ var sendText = function(){
         } else if (response.body.error){
             console.log("response body error");
         }
-    });
+    })
 };
 
 //express is listening
