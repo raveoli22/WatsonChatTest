@@ -7,7 +7,7 @@ const request = require('request');
 
 const app = express();
 
-var token = "EAACvXXrZATJsBAFEZCja5biIB0HWNknVGB1IDkquCrcTZBzBjUCDiZBh2gr9ce3r5wU5kY9AmWj2Tkhx9hDK9uVvsboIqTgZCc55aE9uxgcx3Lo9MWkIw4Ru2s3mjZCdgGOs9wmwL6yvZClLTQ346GDStKdFt87kqG74hGI5CAgsAZDZD";
+let token = "EAACvXXrZATJsBAFEZCja5biIB0HWNknVGB1IDkquCrcTZBzBjUCDiZBh2gr9ce3r5wU5kY9AmWj2Tkhx9hDK9uVvsboIqTgZCc55aE9uxgcx3Lo9MWkIw4Ru2s3mjZCdgGOs9wmwL6yvZClLTQ346GDStKdFt87kqG74hGI5CAgsAZDZD";
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -29,20 +29,20 @@ app.get('/webhook/', function(req,res){
 });
 
 app.post('/webhook/', function(req,res){
-    var messaging_events = req.body.entry[0].messaging
-    for (var i = 0; i < messaging_events.length; i++){
-        var event = messaging_events[i];
-        var sender = event.sender.id;
+    let messaging_events = req.body.entry[0].messaging
+    for (let i = 0; i < messaging_events.length; i++){
+        let event = messaging_events[i];
+        let sender = event.sender.id;
         if(event.message && event.message.text) {
-            var text = event.message.text;
+            let text = event.message.text;
             sendText(sender,"Text echo: " + text.substring(0,100));
         }
     }
     res.sendStatus(200);
 });
 
-var sendText = function(){
-    var messageData = {text: text};
+let sendText = function(){
+    let messageData = {text: text};
     request({
         url: "http://graph.facebook.com/v2.6/me/messages",
         qs: {access_token: token},
