@@ -62,14 +62,14 @@ function getWatson(event){
     });
     
     var conversation = new ConversationV1({
-        username: '',
-        password: '',
+        username: '8c73119f-a332-4909-87e5-891f04484991',
+        password: 'xIoBgZDHNfoA',
         version_date: ConversationV1.VERSION_DATE_2016_09_20
     });
     
     conversation.message({
         input: {text: message},
-        workspace_id: '',
+        workspace_id: '344b3c17-2212-4183-9317-1d453c2ecbae',
         context: context
     }, function(err,res){
         if (err){
