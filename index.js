@@ -31,23 +31,23 @@ app.get('/webhook/', function(req, res) {
 	res.send("Wrong token");
 });
 
-app.post('/webhook/', function(req, res) {
-    console.log(req.body);
-	let messaging_events = req.body.entry[0].messaging;
-	for (let i = 0; i < messaging_events.length; i++) {
-		let event = messaging_events[i];
-		let sender = event.sender.id;
-		if (event.message && event.message.text) {
-			let text = event.message.text;
-            getWatson(sender,text);
-		}
-	}
-	res.sendStatus(200);
+app.post('/webhook/', (req, res) => {
+  console.log(req.body);
+  if (req.body.object === 'page') {
+    req.body.entry.forEach((entry) => {
+      entry.messaging.forEach((event) => {
+        if (event.message && event.message.text) {
+          getWatson(event);
+        }
+      });
+    });
+    res.status(200).end();
+  }
 });
 
-function getWatson(idNum,message){
-    //var idNum = event.sender.id;
-    //var message = event.message.text;
+function getWatson(event){
+    var idNum = event.sender.id;
+    var message = event.message.text;
     
     var context = null;
     var index = 0; 
