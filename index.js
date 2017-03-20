@@ -78,10 +78,10 @@ function getWatson(idNum,message){
             if (context == null){
                 contexts.push({'from': idNum, 'context': res.context});
             } else {
-                contexts[contextIndex].context = response.context;
+                contexts[contextIndex].context = res.context;
             }
             
-            var intent = response.intents[0].intent;
+            var intent = res.intents[0].intent;
             if (intent == "done"){
                 contexts.splice(contextIndex,1);
             }
