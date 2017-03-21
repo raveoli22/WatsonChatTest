@@ -109,20 +109,29 @@ function getWatson(idNum,message){
             //entities -----------------------------------------------------
             if (res.entities.length > 0){ //there are entities from user
                 
+                var searchQuery = "";
+                var location = "";
+                var filter = "";
                 
                 if(res.entities[0].entity == "cuisine"){
-                    var location = "Arcadia";
-                    var searchQuery = res.entities[0].value; 
-                    var filter = "restaurants";
-                    
-                    sendResponse(idNum,res.output.text[0]);
-                    searchYelp(searchQuery,idNum,filter,location);
+                    searchQuery = res.entities[0].value; 
+                    filter = "restaurants";
+                    sendResponse(idNum,"Please enter a location: "); 
+                    if (!location){         //if location is empty
+                        location = message; 
+                    }
+                    else {
+                        sendResponse(idNum,res.output.text[0]); 
+                    }
+                }
+                else {
+                    searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                 }
             }
             // ---------------------------------------------------------------
             
             else {
-                sendResponse(idNum,res.output.text[0]);
+                sendResponse(idNum,res.output.text[0]);        //else just call a normal response
             }
         }
     });
@@ -135,7 +144,8 @@ function searchYelp (searchQuery,recipientID,filter,location){
     yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
 	.then( function ( data ) {
         data.businesses.forEach(function(business,index){
-            sendResponse(recipientID,generateBusinessString(business, index));
+            sendResponse(recipientID,generateBusinessString(business, index)); 
+            //for each business in businesses, create a string and relay back to user
         });
 	})
 	.catch( function ( err ) {
