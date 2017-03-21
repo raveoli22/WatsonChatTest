@@ -114,8 +114,9 @@ function getWatson(idNum,message){
                     
                     var searchQuery = res.entities[0].value; 
                     //var type = "restaurants, All"; 
-                    var newStr = searchYelp(searchQuery);
+                    searchYelp(searchQuery);
                     //res.output.text.push(destString);
+                    console.log(destString);
                    
                 }
                 
@@ -125,7 +126,7 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: "these are your restaurants: " + newStr} //sends IBM conversation's chat back
+                        message : {text: "these are your restaurants: "} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
@@ -166,8 +167,7 @@ var searchYelp = function(searchQuery){
         for (var i=0; i<data.businesses.length;i++){
             destString = destString + " " + data.businesses[i].name;
         }
-        console.log(destString);
-        return destString;
+    
 	})
 	.catch( function ( err ) {
 		console.log( err);
