@@ -111,12 +111,12 @@ function getWatson(idNum,message){
                 
                 
                 if(res.entities[0].entity == "cuisine"){
-                    
+                    var location = "Arcadia";
                     var searchQuery = res.entities[0].value; 
                     var filter = "restaurants";
                     
                     sendResponse(idNum,res.output.text[0]);
-                    searchYelp(searchQuery,idNum,filter);
+                    searchYelp(searchQuery,idNum,filter,location);
                 }
             }
             // ---------------------------------------------------------------
@@ -130,9 +130,9 @@ function getWatson(idNum,message){
 };
 
 //yelp search API call
-function searchYelp (searchQuery,recipientID,filter){
+function searchYelp (searchQuery,recipientID,filter,location){
     
-    yelp.search( { term: searchQuery, location: "Los Angeles", limit: 5, category_filter: filter } )
+    yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
 	.then( function ( data ) {
         data.businesses.forEach(function(business,index){
             sendResponse(recipientID,generateBusinessString(business, index));
