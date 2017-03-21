@@ -117,9 +117,13 @@ function getWatson(idNum,message){
                 intentHolder = "FindRestaurant";
                 filter = "restaurants";
             }
-            if(intent == "FindBar"){
+            else if(intent == "FindBar"){
                 intentHolder = "FindBar";
                 filter = "bars";
+            }
+            else if (intent == "Find_Movie_Theatre"){
+                intentHolder = "Find_Movie_Theatre";
+                filter = "movietheaters";
             }
             
             //Chat logic -----------------------------------------------------
