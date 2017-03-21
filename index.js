@@ -38,6 +38,10 @@ app.get('/', function(req, res) {
 
 let token = "EAACvXXrZATJsBAFEZCja5biIB0HWNknVGB1IDkquCrcTZBzBjUCDiZBh2gr9ce3r5wU5kY9AmWj2Tkhx9hDK9uVvsboIqTgZCc55aE9uxgcx3Lo9MWkIw4Ru2s3mjZCdgGOs9wmwL6yvZClLTQ346GDStKdFt87kqG74hGI5CAgsAZDZD";
 
+
+var destString = ""; //string to be added to message
+
+
 // Facebook 
 
 app.get('/webhook/', function(req, res) {
@@ -104,21 +108,13 @@ function getWatson(idNum,message){
             
             //entities -----------------------------------------------------
             if (res.entities.length > 0){ //there are entities from user
-                var destString = ""; //string to be added to message
+                
                 
                 if(res.entities[0].entity == "cuisine"){
                     
                     var searchQuery = res.entities[0].value; 
                     //var type = "restaurants, All"; 
                     searchYelp(searchQuery);
-                    for (var i = 0; i < businessNames.length; i++){
-                        if (i == (businessNames.length-1)){
-                            destString = destString + businessNames[i];
-                        }
-                        else {
-                            destString = businessNames[i] + ',';
-                        }
-                    }
                 }
                 
                 request({
@@ -127,7 +123,7 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: destString} //sends IBM conversation's chat back
+                        message : {text: res.output.text[0] + " " destString} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
@@ -166,7 +162,7 @@ function searchYelp(searchQuery){
     yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: "restaurant, All", limit: 5} )
 	.then( function ( data ) {
         for (var i=0; i<data.businesses.length;i++){
-            businessNames[i] = data.businesses[i].name;
+            destString = destString + " " + data.businesses[i].name;
         }
 	})
 	.catch( function ( err ) {
