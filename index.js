@@ -133,6 +133,7 @@ function getWatson(idNum,message){
             }
             else if (intent == "FindRestaurant" && res.entities.length < 1){ //initial intent but no entity 
                 hasIntentAlready = true; 
+                sendResponse(idNum,res.output.text[0]);
             }
             else {
                 var location = "";
