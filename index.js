@@ -85,6 +85,9 @@ function getWatson(idNum,message){
             if (intent == "done"){
                 contexts.splice(contextIndex,1);
             }
+            else if (intent == "anything_else"){
+                res.output.text[0] = "I'm sorry, I didn't understand you";
+            }
             
             request({
                 url: "https://graph.facebook.com/v2.6/me/messages",
