@@ -110,7 +110,7 @@ function getWatson(idNum,message){
                     
                     var searchQuery = res.entities[0].value; 
                     var type = "Restaurants"; 
-                    searchYelp(searchQuery,typeFood);
+                    searchYelp(searchQuery,type);
                     for (var i = 0; i < businessNames.length; i++){
                         if (i == (businessNames.length-1)){
                             destString = destString + businessNames[i];
