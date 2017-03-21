@@ -134,26 +134,21 @@ function getWatson(idNum,message){
             else if (intent == "FindRestaurant" && res.entities.length < 1){ //initial intent but no entity 
                 hasIntentAlready = true; 
             }
-            
-            
-
-            var location = "";
-            if(callYelpApi) {  //we need to call yelp API
+            else {
+                var location = "";
+                if(callYelpApi) {  //we need to call yelp API
                     location = message; 
                     sendResponse(idNum,searchQuery); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
                 }
-            }
-            // ---------------------------------------------------------------
-            
-            else {
-                sendResponse(idNum,res.output.text[0]);        //call a normal response
+                else {
+                    sendResponse(idNum,res.output.text[0]);        //call a normal response
+                }
             }
         }
-    });
-    
-};
+    }
+)};
 
 //yelp search API call
 function searchYelp (searchQuery,recipientID,filter,location){
