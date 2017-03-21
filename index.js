@@ -113,7 +113,7 @@ function getWatson(idNum,message){
             //entities -----------------------------------------------------
             
            
-            if (intent == "findRestaurant"){
+            if (intent == "FindRestaurant"){
                 callYelpApi = true;         //there are entities from user
             }
             
@@ -137,7 +137,7 @@ function getWatson(idNum,message){
             // ---------------------------------------------------------------
             
             else {
-                sendResponse(idNum,intent);        //call a normal response
+                sendResponse(idNum,res.output.text[0]);        //call a normal response
             }
         }
     });
