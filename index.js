@@ -163,7 +163,7 @@ function getWatson(idNum,message){
 //yelp search API call
 function searchYelp(searchQuery,typeFood){
     
-    yelp.search( { term: searchQuery, location: "Los Angeles, California, United States", category_filter: type } )
+    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: type, limit: 5} )
 	.then( function ( data ) {
         for (var i=0; i<data.businesses.length;i++){
             businessNames[i] = data.businesses[i].name;
