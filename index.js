@@ -67,7 +67,7 @@ app.post('/webhook/', function(req, res) {
 
 var callYelpApi = false; 
 var searchQuery = "";
-var filters = "restaurants";
+var filter = "restaurants";
 
 function getWatson(idNum,message){
     //var idNum = event.sender.id;
