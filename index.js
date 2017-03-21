@@ -125,7 +125,7 @@ function getWatson(idNum,message){
                     if (!location){         //if location is empty
                         location = message; 
                     }
-                    sendResponse(idNum,location); 
+                    sendResponse(idNum,searchQuery); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
                 }
