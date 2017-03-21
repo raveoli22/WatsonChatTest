@@ -65,6 +65,8 @@ app.post('/webhook/', function(req, res) {
 	res.sendStatus(200);
 });
 
+var callYelpApi = false; 
+
 function getWatson(idNum,message){
     //var idNum = event.sender.id;
     //var message = event.message.text;
@@ -107,12 +109,15 @@ function getWatson(idNum,message){
             }
             
             //entities -----------------------------------------------------
-            if (res.entities.length > 0){ //there are entities from user
-                
-                var searchQuery = "";
-                var location = "";
-                var filter = "";
-                
+            if (res.entities.length > 0){            
+                callYelpApi = true;         //there are entities from user
+            }
+            
+            var searchQuery = "";
+            var location = "";
+            var filter = "";
+            
+            if(callYelpApi) {  //we need to call yelp API
                 if(res.entities[0].entity == "cuisine"){
                     searchQuery = res.entities[0].value; 
                     filter = "restaurants";
@@ -120,18 +125,16 @@ function getWatson(idNum,message){
                     if (!location){         //if location is empty
                         location = message; 
                     }
-                    else {
-                        sendResponse(idNum,location); 
-                    }
                 }
                 else {
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
+                    callYelpApi = false; //after calling yelp api turn it false
                 }
             }
             // ---------------------------------------------------------------
             
             else {
-                sendResponse(idNum,res.output.text[0]);        //else just call a normal response
+                sendResponse(idNum,res.output.text[0]);        //call a normal response
             }
         }
     });
