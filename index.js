@@ -85,8 +85,12 @@ function getWatson(idNum,message){
             if (intent == "done"){
                 contexts.splice(contextIndex,1);
             }
-            else if (intent == "anything_else"){
-                res.output.text[0] = "I'm sorry, I didn't understand you";
+            
+            if (intent == "anything_else"){
+                var message = "I don't understand you";
+            }
+            else {
+                message = res.output.text[0];
             }
             
             request({
@@ -95,7 +99,7 @@ function getWatson(idNum,message){
                 method: "POST",
                 json: {
                     recipient: {id: idNum},
-                    message : {text: res.output.text[0]}
+                    message : {text: message}
                 }
             }, function(error, response, body) {
                 if (error) {
