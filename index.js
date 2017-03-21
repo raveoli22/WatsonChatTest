@@ -121,7 +121,7 @@ function getWatson(idNum,message){
                         location = message; 
                     }
                     else {
-                        sendResponse(idNum,res.output.text[0]); 
+                        sendResponse(idNum,location); 
                     }
                 }
                 else {
