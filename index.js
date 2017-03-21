@@ -137,7 +137,7 @@ function getWatson(idNum,message){
             // ---------------------------------------------------------------
             
             else {
-                sendResponse(idNum,res.output.text[0]);        //call a normal response
+                sendResponse(idNum,intent);        //call a normal response
             }
         }
     });
