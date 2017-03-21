@@ -116,6 +116,7 @@ function getWatson(idNum,message){
                     //var type = "restaurants, All"; 
                     searchYelp(searchQuery);
                     //res.output.text.push(destString);
+                    console.log(destString);
                 }
                 
                 request({
@@ -124,7 +125,7 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: "these are your restaurants: "} //sends IBM conversation's chat back
+                        message : {text: "these are your restaurants: " + destString} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
