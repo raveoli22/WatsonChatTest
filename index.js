@@ -111,10 +111,19 @@ function getWatson(idNum,message){
             }
             
             //entities -----------------------------------------------------
-            if (res.entities.length > 0){
+            if (intent == "FindRestaurant"){
+                if (res.entities.length > 0){
+                    searchQuery = res.entities[0].value; 
+                    callYelpApi = true;         //there are entities from user
+                }
+            }
+            
+            /*
+            else if (res.entities.length > 0 ){
                 searchQuery = res.entities[0].value; 
                 callYelpApi = true;         //there are entities from user
             }
+            */
             
 
             var location = "";
