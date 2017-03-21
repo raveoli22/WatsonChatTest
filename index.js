@@ -138,7 +138,7 @@ function getWatson(idNum,message){
                         console.log("response body error");
                     }
                 });
-            
+                i++;
             }
         }
     });
