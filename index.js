@@ -127,7 +127,7 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: "There are 5 amazing " + typeFood + " restaurants in the LA area: " + destString} //sends IBM conversation's chat back
+                        message : {text: res.entities[0].entity} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
@@ -163,7 +163,7 @@ function getWatson(idNum,message){
 //yelp search API call
 function searchYelp(searchQuery,typeFood){
     
-    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood, limit: 5 } )
+    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood } )
 	.then( function ( data ) {
         for (var i=0; i<data.businesses.length;i++){
             businessNames[i] = data.businesses[i].name;
