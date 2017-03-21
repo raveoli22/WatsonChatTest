@@ -114,9 +114,9 @@ function getWatson(idNum,message){
                     
                     var searchQuery = res.entities[0].value; 
                     //var type = "restaurants, All"; 
-                    searchYelp(searchQuery);
+                    var newStr = searchYelp(searchQuery);
                     //res.output.text.push(destString);
-                    console.log(destString);
+                   
                 }
                 
                 request({
@@ -125,13 +125,13 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: "these are your restaurants: " + destString} //sends IBM conversation's chat back
+                        message : {text: "these are your restaurants: " + newStr} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
                         console.log("sending error");
                     } else if (response.body.error) {
-                        console.log("response body error");
+                        console.log("response body error but why...");
                     }
                 });
             }
@@ -159,7 +159,7 @@ function getWatson(idNum,message){
     
 };
 //yelp search API call
-function searchYelp(searchQuery){
+var searchYelp = function(searchQuery){
     
     yelp.search( { term: searchQuery, location: "Los Angeles", limit: 5} )
 	.then( function ( data ) {
@@ -167,6 +167,7 @@ function searchYelp(searchQuery){
             destString = destString + " " + data.businesses[i].name;
         }
         console.log(destString);
+        return destString;
 	})
 	.catch( function ( err ) {
 		console.log( err);
