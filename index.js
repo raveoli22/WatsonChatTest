@@ -153,6 +153,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
 	})
 	.catch( function ( err ) {
 		console.log( err);
+        sendResponse(recipientID,"Woops, it seems like there was an issue with your address");
 	});
     
 };
