@@ -68,7 +68,7 @@ app.post('/webhook/', function(req, res) {
 var hasIntentAlready = false; 
 var callYelpApi = false; 
 var searchQuery = "";
-var filter = "restaurants";
+var filter = "";
 
 
 function getWatson(idNum,message){
@@ -115,9 +115,11 @@ function getWatson(idNum,message){
             }
             if (intent == "FindRestaurant"){
                 intentHolder = "FindRestaurant";
+                filter = "restaurants";
             }
             if(intent == "FindBar"){
                 intentHolder = "FindBar";
+                filter = "bars";
             }
             
             //Chat logic -----------------------------------------------------
