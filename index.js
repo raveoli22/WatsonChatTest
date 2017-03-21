@@ -114,52 +114,58 @@ function getWatson(idNum,message){
                     
                     var searchQuery = res.entities[0].value; 
                     //var type = "restaurants, All"; 
-                    searchYelp(searchQuery);
-                    //res.output.text.push(destString);
-                    res.output.text.push(destString);
-                   
+                    searchYelp(searchQuery,idNum);
                 }
             }
             // ---------------------------------------------------------------
-            var i = 0; 
-            while (i < res.output.text.length) {
-                request({
-                    url: "https://graph.facebook.com/v2.6/me/messages",
-                    qs : {access_token: token},
-                    method: "POST",
-                    json: {
-                        recipient: {id: idNum},
-                        message : {text: res.output.text[i]} //sends IBM conversation's chat back
-                    }
-                }, function(error, response, body) {
-                    if (error) {
-                        console.log("sending error");
-                    } else if (response.body.error) {
-                        console.log("response body error");
-                    }
-                });
-                i++;
-                console.log(destString);
-                console.log(res.output.text[1]);
+            
+            else {
+                sendResponse(idNum,res.output.text[0]);
             }
         }
     });
     
 };
+
 //yelp search API call
-var searchYelp = function(searchQuery){
+function searchYelp (searchQuery,recipientID){
     
     yelp.search( { term: searchQuery, location: "Los Angeles", limit: 5} )
 	.then( function ( data ) {
-        for (var i=0; i<data.businesses.length;i++){
-            destString = destString + " " + data.businesses[i].name;
-        }
-    
+        data.businesses.forEach(function(business,index){
+            sendResponse(recipientID,generateBusinessString(business, index));
+        });
 	})
 	.catch( function ( err ) {
 		console.log( err);
 	});
     
+};
+
+
+function sendResponse(recipientID,messageText){
+    
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs : {access_token: token},
+        method: "POST",
+        json: {
+            recipient: {id: recipientID},
+            message : {text: messageText} //sends IBM conversation's chat back
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("sending error");
+        } else if (response.body.error) {
+            console.log("response body error but why...");
+        }
+    });
+};
+
+function generateBusinessString(business, index) {
+  var output = index + ". " + business.name + "\n";
+  output += business.location.display_address.join(", ");
+  return output;
 };
 
 app.listen(app.get('port'), function() {
