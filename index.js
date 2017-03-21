@@ -108,8 +108,8 @@ function getWatson(idNum,message){
                 
                 if(res.entities[0].entity == "cuisine"){
                     
-                    var searchQuery = "restaurants";
-                    var typeFood = res.entities[0].value; 
+                    var searchQuery = res.entities[0].value; 
+                    var type = "Restaurants"; 
                     searchYelp(searchQuery,typeFood);
                     for (var i = 0; i < businessNames.length; i++){
                         if (i == (businessNames.length-1)){
@@ -163,7 +163,7 @@ function getWatson(idNum,message){
 //yelp search API call
 function searchYelp(searchQuery,typeFood){
     
-    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood } )
+    yelp.search( { term: searchQuery, location: "Los Angeles, California, United States", category_filter: type } )
 	.then( function ( data ) {
         for (var i=0; i<data.businesses.length;i++){
             businessNames[i] = data.businesses[i].name;
