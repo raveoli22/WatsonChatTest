@@ -5,8 +5,22 @@ const bodyParser = require('body-parser');
 const request = require('request');
 var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
+//yelp API
+var Yelp = require('yelp');
+
+var yelp = new Yelp({
+  consumer_key: '0x96I5XkMZc0ZcgmeqCi8A',
+  consumer_secret: 'oMCBzbBLP4jsEQVITF3WrazR3cE',
+  token: 'Po7DdpBSKYpTDjt8T4qHKWiuyTZCDWn1',
+  token_secret: '9CNHpflcmCZDx2i0py6UGA2J0H8',
+});
+//yelp API
+
 const app = express();
-var contexts = [];
+var contexts = []; //keeps track of contexts
+
+var entities = []; //keeps track of entities 
+var entityIndex = 0;
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -86,20 +100,22 @@ function getWatson(idNum,message){
                 contexts.splice(contextIndex,1);
             }
             
-            if (intent == "anything_else"){
-                var message = "I don't understand you";
+            //entities -----------------------------------------------------
+            if (res.entities.length > 0){ //there are entities from user
+                if(res.entities[0].entity == "cuisine"){
+                    var searchQuery = "restaurants";
+                    var typeFood = res.entities[0].value; 
+                    searchYelp(searchQuery,typeFood);
+                }
             }
-            else {
-                message = res.output.text[0];
-            }
-            
+            // ---------------------------------------------------------------
             request({
                 url: "https://graph.facebook.com/v2.6/me/messages",
                 qs : {access_token: token},
                 method: "POST",
                 json: {
                     recipient: {id: idNum},
-                    message : {text: message}
+                    message : {text: res.output.text[0]} //sends IBM conversation's chat back
                 }
             }, function(error, response, body) {
                 if (error) {
@@ -111,6 +127,18 @@ function getWatson(idNum,message){
             
         }
     });
+    
+};
+//yelp search API call
+function searchYelp(searchQuery,typeFood){
+    
+    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood } )
+	.then( function ( data ) {
+		callback( data.businesses[0].name + "." );
+	})
+	.catch( function ( err ) {
+		console.log( err);
+	});
     
 };
 
