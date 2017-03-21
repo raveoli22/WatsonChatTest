@@ -109,7 +109,9 @@ function getWatson(idNum,message){
             }
             
             //entities -----------------------------------------------------
-            if (res.entities.length > 0){            
+            if (res.entities.length > 0){
+                var searchQuery = res.entities[0].value; 
+                var filter = "restaurants";  
                 callYelpApi = true;         //there are entities from user
             }
             
@@ -117,8 +119,6 @@ function getWatson(idNum,message){
             var location = "";
             if(callYelpApi) {  //we need to call yelp API
                 if(res.entities.length > 0){
-                    var searchQuery = res.entities[0].value; 
-                    var filter = "restaurants";
                     sendResponse(idNum,"Please enter a location: "); 
                 }
                 else {
