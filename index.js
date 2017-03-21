@@ -139,6 +139,8 @@ function getWatson(idNum,message){
                     }
                 });
                 i++;
+                console.log(destString);
+                console.log(res.output.text[1]);
             }
         }
     });
