@@ -116,35 +116,20 @@ function getWatson(idNum,message){
                     //var type = "restaurants, All"; 
                     searchYelp(searchQuery);
                     //res.output.text.push(destString);
-                    console.log(destString);
+                    res.output.text.push(destString);
                    
                 }
-                
-                request({
-                    url: "https://graph.facebook.com/v2.6/me/messages",
-                    qs : {access_token: token},
-                    method: "POST",
-                    json: {
-                        recipient: {id: idNum},
-                        message : {text: "these are your restaurants: "} //sends IBM conversation's chat back
-                    }
-                }, function(error, response, body) {
-                    if (error) {
-                        console.log("sending error");
-                    } else if (response.body.error) {
-                        console.log("response body error but why...");
-                    }
-                });
             }
             // ---------------------------------------------------------------
-            else {
+            var i = 0; 
+            while (i < res.output.text.length) {
                 request({
                     url: "https://graph.facebook.com/v2.6/me/messages",
                     qs : {access_token: token},
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: res.output.text[0]} //sends IBM conversation's chat back
+                        message : {text: res.output.text[i]} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
@@ -153,8 +138,8 @@ function getWatson(idNum,message){
                         console.log("response body error");
                     }
                 });
-            }
             
+            }
         }
     });
     
