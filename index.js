@@ -109,7 +109,7 @@ function getWatson(idNum,message){
                 if(res.entities[0].entity == "cuisine"){
                     
                     var searchQuery = res.entities[0].value; 
-                    var type = "Restaurants"; 
+                    var type = "restaurants, All"; 
                     searchYelp(searchQuery,type);
                     for (var i = 0; i < businessNames.length; i++){
                         if (i == (businessNames.length-1)){
