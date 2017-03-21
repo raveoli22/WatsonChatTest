@@ -123,7 +123,7 @@ function getWatson(idNum,message){
                     method: "POST",
                     json: {
                         recipient: {id: idNum},
-                        message : {text: res.output.text[0] + " " + destString} //sends IBM conversation's chat back
+                        message : {text: destString} //sends IBM conversation's chat back
                     }
                 }, function(error, response, body) {
                     if (error) {
