@@ -22,6 +22,8 @@ var contexts = []; //keeps track of contexts
 var entities = []; //keeps track of entities 
 var entityIndex = 0;
 
+var businessNames = []; 
+
 app.set('port', (process.env.PORT || 5000));
 
 // Allows us to process the data
@@ -102,28 +104,57 @@ function getWatson(idNum,message){
             
             //entities -----------------------------------------------------
             if (res.entities.length > 0){ //there are entities from user
+                var destString = ""; //string to be added to message
+                
                 if(res.entities[0].entity == "cuisine"){
+                    
                     var searchQuery = "restaurants";
                     var typeFood = res.entities[0].value; 
                     searchYelp(searchQuery,typeFood);
+                    for (var i = 0; i < businessNames.length; i++){
+                        if (i == (businessNames.length-1)){
+                            destString = destString + businessNames[i];
+                        }
+                        else {
+                            destString = businessNames[i] + ',';
+                        }
+                    }
                 }
+                
+                request({
+                    url: "https://graph.facebook.com/v2.6/me/messages",
+                    qs : {access_token: token},
+                    method: "POST",
+                    json: {
+                        recipient: {id: idNum},
+                        message : {text: "There are 5 amazing " + typeFood + " restaurants in the LA area: " + destString} //sends IBM conversation's chat back
+                    }
+                }, function(error, response, body) {
+                    if (error) {
+                        console.log("sending error");
+                    } else if (response.body.error) {
+                        console.log("response body error");
+                    }
+                });
             }
             // ---------------------------------------------------------------
-            request({
-                url: "https://graph.facebook.com/v2.6/me/messages",
-                qs : {access_token: token},
-                method: "POST",
-                json: {
-                    recipient: {id: idNum},
-                    message : {text: res.output.text[0]} //sends IBM conversation's chat back
-                }
-            }, function(error, response, body) {
-                if (error) {
-                    console.log("sending error");
-                } else if (response.body.error) {
-                    console.log("response body error");
-                }
-            });
+            else {
+                request({
+                    url: "https://graph.facebook.com/v2.6/me/messages",
+                    qs : {access_token: token},
+                    method: "POST",
+                    json: {
+                        recipient: {id: idNum},
+                        message : {text: res.output.text[0]} //sends IBM conversation's chat back
+                    }
+                }, function(error, response, body) {
+                    if (error) {
+                        console.log("sending error");
+                    } else if (response.body.error) {
+                        console.log("response body error");
+                    }
+                });
+            }
             
         }
     });
@@ -132,9 +163,11 @@ function getWatson(idNum,message){
 //yelp search API call
 function searchYelp(searchQuery,typeFood){
     
-    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood } )
+    yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: typeFood, limit: 5 } )
 	.then( function ( data ) {
-		callback( data.businesses[0].name + "." );
+        for (var i=0; i<data.businesses.length;i++){
+            businessNames[i] = data.businesses[i].name;
+        }
 	})
 	.catch( function ( err ) {
 		console.log( err);
