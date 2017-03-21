@@ -161,7 +161,7 @@ function getWatson(idNum,message){
     
 };
 //yelp search API call
-function searchYelp(searchQuery,typeFood){
+function searchYelp(searchQuery,type){
     
     yelp.search( { term: searchQuery, location: "Los Angeles", category_filter: type, limit: 5} )
 	.then( function ( data ) {
