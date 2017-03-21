@@ -70,6 +70,7 @@ var callYelpApi = false;
 var searchQuery = "";
 var filter = "restaurants";
 
+
 function getWatson(idNum,message){
     //var idNum = event.sender.id;
     //var message = event.message.text;
@@ -100,22 +101,29 @@ function getWatson(idNum,message){
             console.error(err);
         } else {
             console.log(res.output.text[0]);
+            var intentHolder = "";
+            
             if (context == null){
                 contexts.push({'from': idNum, 'context': res.context});
             } else {
                 contexts[contextIndex].context = res.context;
             }
-            
+            //Intent classifying ----------------------------------------------
             var intent = res.intents[0].intent;
             if (intent == "done"){
                 contexts.splice(contextIndex,1);
             }
+            if (intent == "FindRestaurant"){
+                intentHolder = "FindRestaurant";
+            }
+            if(intent == "FindBar"){
+                intentHolder = "FindBar";
+            }
             
-            //entities -----------------------------------------------------
-            
-           
+            //Chat logic -----------------------------------------------------
+            //Chat logic -----------------------------------------------------
 
-            if (intent == "FindRestaurant" && res.entities.length > 0){ //intent and entity for food = call api
+            if (intent == intentHolder && res.entities.length > 0){ //intent and entity for food = call api
                 searchQuery = res.entities[0].value; 
                 callYelpApi = true;  
                 sendResponse(idNum,"Please enter a location: "); 
@@ -131,7 +139,7 @@ function getWatson(idNum,message){
                     sendResponse(idNum,res.output.text[0]);
                 }
             }
-            else if (intent == "FindRestaurant" && res.entities.length < 1){ //initial intent but no entity 
+            else if (intent == intentHolder && res.entities.length < 1){ //initial intent but no entity 
                 hasIntentAlready = true; 
                 sendResponse(idNum,res.output.text[0]);
             }
@@ -139,7 +147,7 @@ function getWatson(idNum,message){
                 var location = "";
                 if(callYelpApi) {  //we need to call yelp API
                     location = message; 
-                    var temp = "Here are 5 " + searchQuery + " restaurants near the location you entered: ";
+                    var temp = "Here are 5 " + searchQuery + " restaurants near the location you have entered: ";
                     sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
@@ -149,6 +157,8 @@ function getWatson(idNum,message){
                 }
             }
         }
+         //logic -----------------------------------------------------
+         //logic -----------------------------------------------------
     }
 )};
 
