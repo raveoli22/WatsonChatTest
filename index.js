@@ -113,7 +113,8 @@ function getWatson(idNum,message){
                 if(res.entities[0].entity == "cuisine"){
                     
                     var searchQuery = res.entities[0].value; 
-                    //var type = "restaurants, All"; 
+                    
+                    sendResponse(idNum,res.output.text[0]);
                     searchYelp(searchQuery,idNum);
                 }
             }
@@ -163,7 +164,7 @@ function sendResponse(recipientID,messageText){
 };
 
 function generateBusinessString(business, index) {
-  var output = index + ". " + business.name + "\n";
+  var output = business.name + "\n\n";
   output += business.location.display_address.join(", ");
   return output;
 };
