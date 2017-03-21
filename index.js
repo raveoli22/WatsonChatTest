@@ -139,7 +139,8 @@ function getWatson(idNum,message){
                 var location = "";
                 if(callYelpApi) {  //we need to call yelp API
                     location = message; 
-                    sendResponse(idNum,searchQuery); 
+                    var temp = "Here are 5 " + searchQuery + " restaurants near the location you entered: ";
+                    sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
                 }
