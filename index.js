@@ -65,6 +65,7 @@ app.post('/webhook/', function(req, res) {
 	res.sendStatus(200);
 });
 
+var hasIntentAlready = false; 
 var callYelpApi = false; 
 var searchQuery = "";
 var filter = "restaurants";
@@ -113,22 +114,32 @@ function getWatson(idNum,message){
             //entities -----------------------------------------------------
             
            
-            if (intent == "FindRestaurant"){
-                callYelpApi = true;         //there are entities from user
+
+            if (intent == "FindRestaurant" && res.entities.length > 0){ //intent and entity for food = call api
+                searchQuery = res.entities[0].value; 
+                callYelpApi = true;  
+                sendResponse(idNum,"Please enter a location: "); 
+            }
+            else if (res.entities.length > 0){                           //only entity, check if intent has been passed
+                if(hasIntentAlready){
+                    searchQuery = res.entities[0].value; 
+                    callYelpApi = true;  
+                    hasIntentAlready = false; 
+                    sendResponse(idNum,"Please enter a location: "); 
+                }
+                else {
+                    sendResponse(idNum,res.output.text[0]);
+                }
+            }
+            else if (intent == "FindRestaurant" && res.entities.length < 1){ //initial intent but no entity 
+                hasIntentAlready = true; 
             }
             
             
 
             var location = "";
             if(callYelpApi) {  //we need to call yelp API
-                if(res.entities.length > 0){
-                    searchQuery = res.entities[0].value; 
-                    sendResponse(idNum,"Please enter a location: "); 
-                }
-                else {
-                    if (!location){         //if location is empty
-                        location = message; 
-                    }
+                    location = message; 
                     sendResponse(idNum,searchQuery); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
