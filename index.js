@@ -185,7 +185,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             sendResponse(recipientID,generateBusinessString(business)); 
             //shows that businessArray is populated correctly
         });
-        sendResponseList(recipientID);
+        sendResponseList(recipientID,businessArray);
 	})
 	.catch( function ( err ) {
 		console.log( err);
@@ -214,7 +214,7 @@ function sendResponse(recipientID,messageText){
     });
 };
 
-function sendResponseList(recipientID){
+function sendResponseList(recipientID,businessArray){
 
     request({
         url: "https://graph.facebook.com/v2.8/me/messages",
@@ -230,12 +230,12 @@ function sendResponseList(recipientID){
                                 top_element_style: "compact",
                                 elements: [
                                   {
-                                    title: "wow",
+                                    title: businessArray[0].name,
                                     subtitle: "subtitle"
                                   },
                                     
                                   {
-                                    title: "yay",
+                                    title: businessArray[1].name,
                                     subtitle: "subtitle"
                                   }
                                 ]    
