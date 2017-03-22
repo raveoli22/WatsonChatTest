@@ -172,7 +172,7 @@ function getWatson(idNum,message){
 function getAddressOnly (sQuery){
     yelp.search({ term: sQuery, limit: 1})
 	.then( function ( data ) {
-        sendResponseList(recipientID,generateBusinessString(data.businesses[0]);
+        sendResponse(recipientID,generateBusinessString(data.businesses[0]));
 	})
 	.catch( function ( err ) {
 		console.log( err);
