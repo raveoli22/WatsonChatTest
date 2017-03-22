@@ -160,7 +160,6 @@ function getWatson(idNum,message){
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);        //call a normal response
-                    sendResponseList(idNum); //shows that its working
                 }
             }
         }
@@ -186,7 +185,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             sendResponse(recipientID,generateBusinessString(business)); 
             //shows that businessArray is populated correctly
         });
-        
+        sendResponseList(recipientID);
 	})
 	.catch( function ( err ) {
 		console.log( err);
