@@ -180,7 +180,7 @@ function getWatson(idNum,message){
                         if (res.entities[i] == "Math_symbols"){
                             signs.push(res.entities[i].value);
                         }
-                        else {
+                        else if(res.entities[i] == "sys-number"){
                             numbs.push(res.entities[i].value);
                         }
                     }
