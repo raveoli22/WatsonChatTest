@@ -153,7 +153,7 @@ function getWatson(idNum,message){
                 var location = "";
                 if(callYelpApi) {  //we need to call yelp API
                     location = message; 
-                    var temp = "Here are 5 HOT " + searchQuery + " spots near the location you have entered: ";
+                    var temp = "Here are 4 HOT " + searchQuery + " spots near the location you have entered: ";
                     sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
@@ -265,9 +265,9 @@ function sendResponseList(recipientID,businessArray){
                                   },
                                 
                                   {
-                                    title: businessArray[2].name,
-                                    subtitle: businessArray[2].display_phone,
-                                    image_url: businessArray[2].image_url,
+                                    title: businessArray[3].name,
+                                    subtitle: businessArray[3].display_phone,
+                                    image_url: businessArray[3].image_url,
                                     buttons: [
                                         {
                                             type:  "postback",
@@ -307,6 +307,7 @@ function sendResponseButton(recipientID){
         method: "POST",
         json: {
             recipient: {id: recipientID},
+            sender_action: "typing_on",
             message : { 
                         attachment: {
                             type: "template",
