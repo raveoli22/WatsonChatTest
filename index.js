@@ -74,7 +74,7 @@ app.post('/webhook/', function(req, res) {
             if (payload == "view more items"){
                 callYelpApi = true; 
                 offset = offset + 4;
-                sendResponse(sender,"Okay, 4 more coming right up near: " + location);
+                sendResponse(sender,"Okay, 4 more coming right up near: \"" + location + "\"");
                 searchYelp(searchQuery,sender,filter,location,offset);
             }
             else {
@@ -178,7 +178,7 @@ function getWatson(idNum,message){
                     if (location == ""){ //if location is empty
                         location = message; 
                     }
-                    var temp = "Here are 4 HOT " + searchQuery + " spots near: " + location;
+                    var temp = "Here are 4 HOT " + searchQuery + " spots near: \"" + location + "\"";
                     sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location,offset);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
