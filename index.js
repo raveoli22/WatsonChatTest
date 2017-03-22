@@ -181,7 +181,7 @@ function getWatson(idNum,message){
                             signs.push(res.entities[i].value);
                         }
                         else if(res.entities[i].entity == "sys-number"){
-                            numbs.push(res.entities[i].value);
+                            numbs.push(Number(res.entities[i].value));
                         }
                     }
                     Math_is_fun(signs,numbs);
