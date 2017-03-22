@@ -186,6 +186,8 @@ function getWatson(idNum,message){
                     }
                     Math_is_fun(signs,numbs);
                     sendResponse(idNum,signs[0]);
+                    signs = []; //clearing them
+                    numbs = [];
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);
