@@ -186,8 +186,8 @@ function getWatson(idNum,message){
                     }
                     Math_is_fun(signs,numbs);
                     sendResponse(idNum,sum.toString());
-                    sendResponse(idNum,signs.length.toString());
-                    sendResponse(idNum,numbs.length.toString());
+                    //sendResponse(idNum,signs.length.toString());
+                    //sendResponse(idNum,numbs.length.toString());
                     signs = []; //clearing global math vars
                     numbs = [];
                     sum = 0; 
