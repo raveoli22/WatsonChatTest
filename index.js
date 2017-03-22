@@ -230,7 +230,6 @@ function sendResponseList(recipientID,address,business){
                                             title: "View on Yelp",
                                             type: "web_url",
                                             url: business.url,
-                                            messenger_extensions: true,
                                             webview_height_ratio: "tall"
                                         }
                                     ]
@@ -245,7 +244,7 @@ function sendResponseList(recipientID,address,business){
         if (error) {
             console.log("sending error");
         } else if (response.body.error) {
-            console.log("response body error but why...");
+            console.log("response body error LIST but why...");
         }
     });
     
@@ -286,7 +285,7 @@ function sendResponseButton(recipientID){
         if (error) {
             console.log("sending error");
         } else if (response.body.error) {
-            console.log("response body error but why...");
+            console.log("response body error BUTTON but why...");
         }
     });
     
