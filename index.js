@@ -165,7 +165,6 @@ function getWatson(idNum,message){
                 searchQuery = res.entities[0].value; 
                 callYelpApi = true;  
                 sendResponse(idNum,"Please enter a location: "); 
-                sendResponse(idNum,location + "@@@@");
             }
             else if (res.entities.length > 0 && !callYelpApi){    //only entity, check if intent has been passed
                                                                   //if we need to call yelp api,skip this section
