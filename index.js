@@ -169,6 +169,7 @@ function getWatson(idNum,message){
 )};
 
 var businessArray = [];
+var businessAddressArray = [];
 //yelp search API call
 function searchYelp (searchQuery,recipientID,filter,location){
     
@@ -176,10 +177,11 @@ function searchYelp (searchQuery,recipientID,filter,location){
 	.then( function ( data ) {
         
         data.businesses.forEach(function(business){
-            sendResponseList(recipientID,generateBusinessString(business),business); 
+            businessArray.push(business);
+            businessAddressArray.push(generateBusinessString(business));
             //for each business in businesses, create a string and relay back to user
         });
-        //sendResponseButton(recipientID); //TESTING BUTTON HERE
+        sendResponse(recipientID,businessAddressArray[0]); 
 	})
 	.catch( function ( err ) {
 		console.log( err);
