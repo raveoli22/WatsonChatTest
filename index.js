@@ -168,12 +168,14 @@ function getWatson(idNum,message){
     }
 )};
 
+var businessArray = [];
 //yelp search API call
 function searchYelp (searchQuery,recipientID,filter,location){
     
     yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
 	.then( function ( data ) {
-        data.businesses.forEach(function(business,index){
+        
+        data.businesses.forEach(function(business){
             sendResponseList(recipientID,generateBusinessString(business),business); 
             //for each business in businesses, create a string and relay back to user
         });
@@ -223,16 +225,6 @@ function sendResponseList(recipientID,address,business){
                                 elements: [
                                   {
                                     title: business.name,
-                                    image_url: business.image_url,
-                                    subtitle: business.display_phone,
-                                    buttons: [
-                                        {
-                                            title: "View on Yelp",
-                                            type: "web_url",
-                                            url: business.url,
-                                            webview_height_ratio: "tall"
-                                        }
-                                    ]
                                   }
                                 ]    
                             }
