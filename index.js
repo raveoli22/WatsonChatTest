@@ -24,6 +24,14 @@ var entityIndex = 0;
 
 var businessNames = []; 
 
+
+//YELP API GLOBALS
+var hasIntentAlready = false; 
+var callYelpApi = false; 
+var searchQuery = "";
+var filter = "";
+var offset = 0;
+
 app.set('port', (process.env.PORT || 5000));
 
 // Allows us to process the data
@@ -68,10 +76,7 @@ app.post('/webhook/', function(req, res) {
 	res.sendStatus(200);
 });
 
-var hasIntentAlready = false; 
-var callYelpApi = false; 
-var searchQuery = "";
-var filter = "";
+
 
 //watson
 
@@ -157,7 +162,7 @@ function getWatson(idNum,message){
                     location = message; 
                     var temp = "Here are 4 HOT " + searchQuery + " spots near the location you have entered: ";
                     sendResponse(idNum,temp); 
-                    searchYelp(searchQuery,idNum,filter,location);  //if entity if found then we use yelp api
+                    searchYelp(searchQuery,idNum,filter,location,offset);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
                 }
                 else {
@@ -178,10 +183,10 @@ function getAddressOnly (recipientID,address){
 };
 
 //yelp search API call for main purposes
-function searchYelp (searchQuery,recipientID,filter,location){
+function searchYelp (searchQuery,recipientID,filter,location,offset){
     var businessArray = [];
     var businessAddressArray = [];
-    yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
+    yelp.search( { term: searchQuery, location: location, limit: 4, category_filter: filter, offset: offset } )
 	.then( function ( data ) {
         
         data.businesses.forEach(function(business){
