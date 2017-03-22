@@ -181,7 +181,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             businessAddressArray.push(generateBusinessString(business));
             //for each business in businesses, create a string and relay back to user
         });
-        sendResponseList(recipientID,businessArray,businessAddressArray); 
+        sendResponse(recipientID,"in here"); 
 	})
 	.catch( function ( err ) {
 		console.log( err);
