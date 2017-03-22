@@ -33,6 +33,11 @@ var filter = "";
 var offset = 0;
 var location = "";
 
+//MATH GLOBALS
+var numbs = [];
+var signs = [];
+var sum = 0; 
+
 app.set('port', (process.env.PORT || 5000));
 
 // Allows us to process the data
@@ -149,8 +154,8 @@ function getWatson(idNum,message){
                 filter = "movietheaters";
             }
             
-            //Chat logic -----------------------------------------------------
-            //Chat logic -----------------------------------------------------
+            //YELP Chat logic -----------------------------------------------------
+            //YELP Chat logic -----------------------------------------------------
 
             if (intent == intentHolder && res.entities.length > 0){ //intent and entity for food = call api
                 searchQuery = res.entities[0].value; 
@@ -163,6 +168,18 @@ function getWatson(idNum,message){
                     callYelpApi = true;  
                     hasIntentAlready = false; 
                     sendResponse(idNum,"Please enter a location: "); 
+                }
+                else if (res.entities[0] == "Math_symbols" || res.entities[0] == "sys-number" ){
+                    for (var i = 0; i = res.entities.length; i++){
+                        if (res.entities[i] == "Math_symbols"){
+                            signs.push(res.entities[i].value);
+                        }
+                        else {
+                            numbs.push(res.entities[i].value);
+                        }
+                        Math_is_fun(signs,numbs);
+                        sendResponse(idNum,sum.toString());
+                    }
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);
@@ -385,6 +402,18 @@ function generateBusinessString(business) {
   var output = business.name + "\n\n";
   output += business.location.display_address.join(", ");
   return output;
+};
+
+function Math_is_fun(signs,numbs){
+    var execute = {
+        '+': function (x, y) { return x + y },
+        '-': function (x, y) { return x - y },
+        '/': function (x, y) { return x / y },
+        '*': function (x, y) { return x * y },
+    }
+    for (var i = 0; i < signs.length; i++){
+        sum = execute[signs[i]](numbs[i],numbs[i+1]);
+    }
 };
 
 app.listen(app.get('port'), function() {
