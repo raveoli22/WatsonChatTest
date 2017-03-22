@@ -177,6 +177,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             sendResponse(recipientID,generateBusinessString(business, index)); 
             //for each business in businesses, create a string and relay back to user
         });
+        sendResponseButton(recipientID); //TESTING BUTTON HERE
 	})
 	.catch( function ( err ) {
 		console.log( err);
@@ -194,7 +195,7 @@ function sendResponse(recipientID,messageText){
         method: "POST",
         json: {
             recipient: {id: recipientID},
-            message : {text: messageText} //sends IBM conversation's chat back
+            message : {text: messageText} //sends text back to facebook chat 
         }
     }, function(error, response, body) {
         if (error) {
@@ -203,6 +204,47 @@ function sendResponse(recipientID,messageText){
             console.log("response body error but why...");
         }
     });
+};
+
+function sendResponseButton(recipientID){
+    
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs : {access_token: token},
+        method: "POST",
+        json: {
+            recipient: {id: recipientID},
+            message : { 
+                        attachment: {
+                            type: "template",
+                            payload: {
+                                template_type: "button",
+                                text: "Was I helpful?",
+                                buttons: [
+                                  {
+                                    type: "postback",
+                                    title: "YES",
+                                    payload: "DEVELOPER_DEFINED_PAYLOAD"
+                                  },
+                                  {
+                                    type: "postback",
+                                    title: "NO",
+                                    payload: "DEVELOPER_DEFINED_PAYLOAD"  
+                                  }
+                                ]    
+                            }
+                        }
+
+        } //sends button back to facebook chat for user feedback
+      }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("sending error");
+        } else if (response.body.error) {
+            console.log("response body error but why...");
+        }
+    });
+    
 };
 
 function generateBusinessString(business, index) {
