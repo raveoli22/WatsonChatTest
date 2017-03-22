@@ -413,13 +413,14 @@ function generateBusinessString(business) {
 function Math_is_fun(signs,numbs){
     var execute = {
         '+': function (x, y) { return x + y },
-        '-': function (x, y) { return x - y },
-        '/': function (x, y) { return x / y },
-        '*': function (x, y) { return x * y },
+        '-': function (x, y) { return x - y }
+        //'/': function (x, y) { return x / y },
+        //'*': function (x, y) { return x * y }
     }
     for (var i = 0; i < signs.length; i++){
         sum = sum + execute[signs[i]](numbs[i],numbs[i+1]);
     }
+    
 };
 
 app.listen(app.get('port'), function() {
