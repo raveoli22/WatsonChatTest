@@ -185,7 +185,7 @@ function getWatson(idNum,message){
                         }
                     }
                     Math_is_fun(signs,numbs);
-                    sendResponse(idNum,res.entities[0].value);
+                    sendResponse(idNum,numbs[0]);
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);
