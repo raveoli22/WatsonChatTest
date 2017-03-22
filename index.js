@@ -178,7 +178,7 @@ function getWatson(idNum,message){
                     if (location == ""){ //if location is empty
                         location = message; 
                     }
-                    var temp = "Here are 4 HOT " + searchQuery + " spots near: \"" + location + "\"";
+                    var temp = "Here are 4 HOT \"" + searchQuery + "\" spots near: \"" + location + "\"";
                     sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location,offset);  //if entity if found then we use yelp api
                     callYelpApi = false; //after calling yelp api turn it false
@@ -216,7 +216,14 @@ function searchYelp (searchQuery,recipientID,filter,location,offset){
 	})
 	.catch( function ( err ) {
 		console.log( err);
-        sendResponse(recipientID,"Woops, it seems like there was an issue with your address");
+        if (offset > 0){
+            var tmp = "Wow, it seems like there are no more \"" + searchQuery "\" spots around the area, try a different address!";
+            sendResponse(recipientID,tmp);
+        }
+        else {
+            sendResponse(recipientID,"Woops, it seems like there was an issue with your address");
+        }
+        
 	});
     
 };
