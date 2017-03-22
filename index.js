@@ -172,9 +172,9 @@ function getWatson(idNum,message){
 
 
 //yelp search call for address only 
-function getAddressOnly (recipientID,businessID){
+function getAddressOnly (recipientID,address){
     //var temp = yelp.business.businessID.location.address1; 
-    sendResponse(recipientID,"button pressed");
+    sendResponse(recipientID,address);
 };
 
 //yelp search API call for main purposes
@@ -241,7 +241,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[0].id
+                                            payload: generateBusinessString(businessArray[0])
                                         }
                                     ]
                                   },
@@ -254,7 +254,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[1].id
+                                            payload: generateBusinessString(businessArray[1])
                                         }
                                     ]
                                   },
@@ -267,7 +267,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[2].id
+                                            payload: generateBusinessString(businessArray[2])
                                         }
                                     ]
                                   },
@@ -280,7 +280,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[3].id
+                                            payload: generateBusinessString(businessArray[3])
                                         }
                                     ]
                                   }
