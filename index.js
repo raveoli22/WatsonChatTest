@@ -160,7 +160,7 @@ function getWatson(idNum,message){
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);        //call a normal response
-                    sendResponseList(recipientID); //shows that its working
+                    sendResponseList(idNum); //shows that its working
                 }
             }
         }
