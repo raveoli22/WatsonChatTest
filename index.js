@@ -249,6 +249,32 @@ function sendResponseList(recipientID,businessArray){
                                             payload: "DEVELOPER_DEFINED_PAYLOAD" 
                                         }
                                     ]
+                                  },
+
+                                  {
+                                    title: businessArray[2].name,
+                                    subtitle: businessArray[2].display_phone,
+                                    image_url: businessArray[2].image_url,
+                                    buttons: [
+                                        {
+                                            type:  "postback",
+                                            title: "Address",
+                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                        }
+                                    ]
+                                  },
+                                
+                                  {
+                                    title: businessArray[2].name,
+                                    subtitle: businessArray[2].display_phone,
+                                    image_url: businessArray[2].image_url,
+                                    buttons: [
+                                        {
+                                            type:  "postback",
+                                            title: "Address",
+                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                        }
+                                    ]
                                   }
                                 ]    
                             }
