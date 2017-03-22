@@ -34,6 +34,7 @@ var offset = 0;
 var location = "";
 
 //MATH GLOBALS
+var doMath = false;
 var numbs = [];
 var signs = [];
 var sum = 0; 
@@ -153,6 +154,9 @@ function getWatson(idNum,message){
                 intentHolder = "Find_Movie_Theatre";
                 filter = "movietheaters";
             }
+            else if (intent == "Math"){
+                doMath = true; 
+            }
             
             //YELP Chat logic -----------------------------------------------------
             //YELP Chat logic -----------------------------------------------------
@@ -169,7 +173,7 @@ function getWatson(idNum,message){
                     hasIntentAlready = false; 
                     sendResponse(idNum,"Please enter a location: "); 
                 }
-                else if (res.entities[0] == "Math_symbols" || res.entities[0] == "sys-number" ){
+                else if (doMath){
                     for (var i = 0; i = res.entities.length; i++){
                         if (res.entities[i] == "Math_symbols"){
                             signs.push(res.entities[i].value);
