@@ -60,7 +60,10 @@ app.post('/webhook/', function(req, res) {
 		if (event.message && event.message.text) {
 			let text = event.message.text;
             getWatson(sender,text);
-		}
+		} else if (event.postback && event.postback.payload){
+            let payload = event.postback.payload;
+            //handle payload accordingly
+        }
 	}
 	res.sendStatus(200);
 });
@@ -70,10 +73,9 @@ var callYelpApi = false;
 var searchQuery = "";
 var filter = "";
 
+//watson
 
 function getWatson(idNum,message){
-    //var idNum = event.sender.id;
-    //var message = event.message.text;
     
     var context = null;
     var index = 0; 
@@ -169,7 +171,18 @@ function getWatson(idNum,message){
 )};
 
 
-//yelp search API call
+//yelp search call for address only 
+function getAddressOnly (sQuery){
+    yelp.search({ term: sQuery, limit: 1})
+	.then( function ( data ) {
+        sendResponseList(recipientID,generateBusinessString(data.businesses[0]);
+	})
+	.catch( function ( err ) {
+		console.log( err);
+	});
+};
+
+//yelp search API call for main purposes
 function searchYelp (searchQuery,recipientID,filter,location){
     var businessArray = [];
     var businessAddressArray = [];
@@ -233,7 +246,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                            payload: businessArray[0].name
                                         }
                                     ]
                                   },
@@ -246,7 +259,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                            payload: businessArray[1].name
                                         }
                                     ]
                                   },
@@ -259,7 +272,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                            payload: businessArray[2].name
                                         }
                                     ]
                                   },
@@ -272,7 +285,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                            payload: businessArray[3].name
                                         }
                                     ]
                                   }
@@ -281,16 +294,13 @@ function sendResponseList(recipientID,businessArray){
                                     {
                                         type: "postback",
                                         title: "View More",
-                                        payload: "4"
+                                        payload: "view more items"
                                     }
                                 ]
                             }
                         }
 
-        }, //sends list of restaurants to user
-        postback: {
-            payload: "Payload"
-        }
+        } //sends list of restaurants to user
       }
     }, function(error, response, body) {
         if (error) {
