@@ -276,7 +276,14 @@ function sendResponseList(recipientID,businessArray){
                                         }
                                     ]
                                   }
-                                ]    
+                                ],
+                                buttons: [
+                                    {
+                                        type: "postback",
+                                        title: "View More",
+                                        payload: "payload"
+                                    }
+                                ]
                             }
                         }
 
