@@ -173,8 +173,8 @@ function getWatson(idNum,message){
 
 //yelp search call for address only 
 function getAddressOnly (recipientID,businessID){
-    var temp = yelp.business.businessID.location.address1; 
-    sendResponse(recipientID,temp);
+    //var temp = yelp.business.businessID.location.address1; 
+    sendResponse(recipientID,"button pressed");
 };
 
 //yelp search API call for main purposes
