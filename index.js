@@ -177,10 +177,10 @@ function getWatson(idNum,message){
                     doMath = false; 
                     
                     for (var i = 0; i < res.entities.length; i++){
-                        if (res.entities[i] == "Math_symbols"){
+                        if (res.entities[i].entity == "Math_symbols"){
                             signs.push(res.entities[i].value);
                         }
-                        else if(res.entities[i] == "sys-number"){
+                        else if(res.entities[i].entity == "sys-number"){
                             numbs.push(res.entities[i].value);
                         }
                     }
