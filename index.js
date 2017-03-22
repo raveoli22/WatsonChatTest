@@ -178,10 +178,13 @@ function searchYelp (searchQuery,recipientID,filter,location){
         
         data.businesses.forEach(function(business){
             businessArray.push(business);
-            businessAddressArray.push(generateBusinessString(business));
             //for each business in businesses, create a string and relay back to user
         });
-        sendResponse(recipientID,"in here"); 
+        
+        businessArray.forEach(function(business){
+            sendResponse(recipientID,generateBusinessString(business)); 
+            //shows that businessArray is populated correctly
+        });
 	})
 	.catch( function ( err ) {
 		console.log( err);
