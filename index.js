@@ -281,13 +281,16 @@ function sendResponseList(recipientID,businessArray){
                                     {
                                         type: "postback",
                                         title: "View More",
-                                        payload: "Chinese"
+                                        payload: "Payload"
                                     }
                                 ]
                             }
                         }
 
-        } //sends list of restaurants to user
+        }, //sends list of restaurants to user
+        postback: {
+            payload: "Payload"
+        }
       }
     }, function(error, response, body) {
         if (error) {
