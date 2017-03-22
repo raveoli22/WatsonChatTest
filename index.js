@@ -174,15 +174,15 @@ function getWatson(idNum,message){
                     sendResponse(idNum,"Please enter a location: "); 
                 }
                 else if (doMath){
-                    for (var i = 0; i = res.entities.length; i++){
-                        doMath = false; 
+                    doMath = false; 
+                    
+                    for (var i = 0; i < res.entities.length; i++){
                         if (res.entities[i] == "Math_symbols"){
                             signs.push(res.entities[i].value);
                         }
                         else {
                             numbs.push(res.entities[i].value);
                         }
-                        //Math_is_fun(signs,numbs);
                     }
                     sendResponse(idNum,"doing_simple_Math");
                 }
