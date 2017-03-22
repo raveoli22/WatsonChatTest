@@ -281,7 +281,7 @@ function sendResponseList(recipientID,businessArray){
                                     {
                                         type: "postback",
                                         title: "View More",
-                                        payload: "Payload"
+                                        payload: "4"
                                     }
                                 ]
                             }
