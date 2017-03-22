@@ -31,6 +31,7 @@ var callYelpApi = false;
 var searchQuery = "";
 var filter = "";
 var offset = 0;
+var location = "";
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -140,6 +141,7 @@ function getWatson(idNum,message){
                 searchQuery = res.entities[0].value; 
                 callYelpApi = true;  
                 sendResponse(idNum,"Please enter a location: "); 
+                location = message; 
             }
             else if (res.entities.length > 0){                           //only entity, check if intent has been passed
                 if(hasIntentAlready){
@@ -147,6 +149,7 @@ function getWatson(idNum,message){
                     callYelpApi = true;  
                     hasIntentAlready = false; 
                     sendResponse(idNum,"Please enter a location: "); 
+                    location = message; 
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);
@@ -157,9 +160,8 @@ function getWatson(idNum,message){
                 sendResponse(idNum,res.output.text[0]);
             }
             else {
-                var location = "";
+                
                 if(callYelpApi) {  //we need to call yelp API
-                    location = message; 
                     var temp = "Here are 4 HOT " + searchQuery + " spots near the location you have entered: ";
                     sendResponse(idNum,temp); 
                     searchYelp(searchQuery,idNum,filter,location,offset);  //if entity if found then we use yelp api
