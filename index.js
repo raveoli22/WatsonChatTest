@@ -185,6 +185,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             sendResponse(recipientID,generateBusinessString(business)); 
             //shows that businessArray is populated correctly
         });
+        sendResponseList(recipientID); //shows that its working
 	})
 	.catch( function ( err ) {
 		console.log( err);
@@ -213,7 +214,7 @@ function sendResponse(recipientID,messageText){
     });
 };
 
-function sendResponseList(recipientID,businessArray,businessAddressArray){
+function sendResponseList(recipientID){
 
     request({
         url: "https://graph.facebook.com/v2.6/me/messages",
