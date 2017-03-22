@@ -122,14 +122,17 @@ function getWatson(idNum,message){
                 contexts.splice(contextIndex,1);
             }
             if (intent == "FindRestaurant"){
+                location = "";
                 intentHolder = "FindRestaurant";
                 filter = "restaurants";
             }
             else if(intent == "FindBar"){
+                location = "";
                 intentHolder = "FindBar";
                 filter = "bars";
             }
             else if (intent == "Find_Movie_Theatre"){
+                location = "";
                 intentHolder = "Find_Movie_Theatre";
                 filter = "movietheaters";
             }
