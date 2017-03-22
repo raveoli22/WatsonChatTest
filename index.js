@@ -181,11 +181,11 @@ function getWatson(idNum,message){
                             signs.push(res.entities[i].value);
                         }
                         else if(res.entities[i].entity == "sys-number"){
-                            numbs.push(res.entities[i].value.numeric_value);
+                            numbs.push(res.entities[i].value);
                         }
                     }
                     Math_is_fun(signs,numbs);
-                    sendResponse(idNum,numbs[0]);
+                    sendResponse(idNum,numbs[1]);
                 }
                 else {
                     sendResponse(idNum,res.output.text[0]);
