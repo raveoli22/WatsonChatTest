@@ -60,10 +60,7 @@ app.post('/webhook/', function(req, res) {
 		if (event.message && event.message.text) {
 			let text = event.message.text;
             getWatson(sender,text);
-		} else if (event.postback && event.postback.payload){
-            let payload = event.postback.payload;
-            //handle payload accordingly
-        }
+		}
 	}
 	res.sendStatus(200);
 });
