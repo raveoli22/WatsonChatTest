@@ -418,13 +418,15 @@ function generateBusinessString(business) {
 function Math_is_fun(signs,numbs){
     var execute = {
         '+': function (x, y) { return x + y; },
-        '- ': function (x, y) { return x - y; },
-        '-': function (x, y) { return x + y; }
+        '-': function (x, y) { return x - y; }
         //'/': function (x, y) { return x / y },
         //'*': function (x, y) { return x * y }
     }
     sum = execute[signs[0]](numbs[0],numbs[1]);
     for (var i = 1; i < signs.length; i++){
+        if (numbs[i] < 0){
+            numbs[i] = numbs[i]*-1;
+        }
         sum = execute[signs[i]](sum,numbs[i+1]);
     }
     
