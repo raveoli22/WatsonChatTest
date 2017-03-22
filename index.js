@@ -219,6 +219,7 @@ function searchYelp (searchQuery,recipientID,filter,location,offset){
         if (offset > 0){
             var tmp = "Wow, it seems like there are no more \" " + searchQuery + " \" spots around the area, try a different address!";
             sendResponse(recipientID,tmp);
+            callYelpApi = false; 
         }
         else {
             sendResponse(recipientID,"Woops, it seems like there was an issue with your address");
