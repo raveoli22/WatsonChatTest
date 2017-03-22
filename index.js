@@ -37,7 +37,7 @@ var location = "";
 var doMath = false;
 var numbs = [];
 var signs = [];
-var sum = 0; 
+var sum = 200; 
 
 app.set('port', (process.env.PORT || 5000));
 
