@@ -177,8 +177,8 @@ function getWatson(idNum,message){
                         else {
                             numbs.push(res.entities[i].value);
                         }
-                        Math_is_fun(signs,numbs);
-                        sendResponse(idNum,sum.toString());
+                        //Math_is_fun(signs,numbs);
+                        sendResponse(idNum,"sum.toString()");
                     }
                 }
                 else {
