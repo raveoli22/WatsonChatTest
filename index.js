@@ -175,6 +175,7 @@ function getWatson(idNum,message){
                 }
                 else if (doMath){
                     for (var i = 0; i = res.entities.length; i++){
+                        doMath = false; 
                         if (res.entities[i] == "Math_symbols"){
                             signs.push(res.entities[i].value);
                         }
