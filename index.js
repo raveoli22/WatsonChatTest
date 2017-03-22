@@ -174,10 +174,10 @@ function searchYelp (searchQuery,recipientID,filter,location){
     yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
 	.then( function ( data ) {
         data.businesses.forEach(function(business,index){
-            sendResponse(recipientID,generateBusinessString(business, index)); 
+            sendResponseList(recipientID,generateBusinessString(business),business); 
             //for each business in businesses, create a string and relay back to user
         });
-        sendResponseButton(recipientID); //TESTING BUTTON HERE
+        //sendResponseButton(recipientID); //TESTING BUTTON HERE
 	})
 	.catch( function ( err ) {
 		console.log( err);
@@ -204,6 +204,51 @@ function sendResponse(recipientID,messageText){
             console.log("response body error but why...");
         }
     });
+};
+
+function sendResponseList(recipientID,address,business){
+
+    request({
+        url: "https://graph.facebook.com/v2.6/me/messages",
+        qs : {access_token: token},
+        method: "POST",
+        json: {
+            recipient: {id: recipientID},
+            message : { 
+                        attachment: {
+                            type: "template",
+                            payload: {
+                                template_type: "list",
+                                top_element_style: "compact",
+                                elements: [
+                                  {
+                                    title: business.name,
+                                    image_url: business.image_url,
+                                    subtitle: business.display_phone,
+                                    buttons: [
+                                        {
+                                            title: "View on Yelp",
+                                            type: "web_url",
+                                            url: business.url,
+                                            messenger_extensions: true,
+                                            webview_height_ratio: "tall"
+                                        }
+                                    ]
+                                  }
+                                ]    
+                            }
+                        }
+
+        } //sends list of restaurants to user
+      }
+    }, function(error, response, body) {
+        if (error) {
+            console.log("sending error");
+        } else if (response.body.error) {
+            console.log("response body error but why...");
+        }
+    });
+    
 };
 
 function sendResponseButton(recipientID){
@@ -247,7 +292,7 @@ function sendResponseButton(recipientID){
     
 };
 
-function generateBusinessString(business, index) {
+function generateBusinessString(business) {
   var output = business.name + "\n\n";
   output += business.location.display_address.join(", ");
   return output;
