@@ -74,6 +74,7 @@ app.post('/webhook/', function(req, res) {
             if (payload == "view more items"){
                 callYelpApi = true; 
                 offset = offset + 4;
+                getWatson(sender,"");
             }
             else {
                 getAddressOnly(sender,payload);
