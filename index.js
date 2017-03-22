@@ -418,7 +418,8 @@ function generateBusinessString(business) {
 function Math_is_fun(signs,numbs){
     var execute = {
         '+': function (x, y) { return x + y; },
-        '-': function (x, y) { return x - y; }
+        '- ': function (x, y) { return x - y; },
+        '-': function (x, y) { return x + y; }
         //'/': function (x, y) { return x / y },
         //'*': function (x, y) { return x * y }
     }
