@@ -71,7 +71,14 @@ app.post('/webhook/', function(req, res) {
             getWatson(sender,text);
 		} else if (event.postback && event.postback.payload){
             let payload = event.postback.payload; 
-            getAddressOnly(sender,payload);
+            if (payload == "view more items"){
+                callYelpApi = true; 
+                offset = offset + 4;
+            }
+            else {
+                getAddressOnly(sender,payload);
+            }
+            
         }
 	}
 	res.sendStatus(200);
@@ -123,16 +130,19 @@ function getWatson(idNum,message){
             }
             if (intent == "FindRestaurant"){
                 location = "";
+                offset = 0; 
                 intentHolder = "FindRestaurant";
                 filter = "restaurants";
             }
             else if(intent == "FindBar"){
                 location = "";
+                offset = 0; 
                 intentHolder = "FindBar";
                 filter = "bars";
             }
             else if (intent == "Find_Movie_Theatre"){
                 location = "";
+                offset = 0; 
                 intentHolder = "Find_Movie_Theatre";
                 filter = "movietheaters";
             }
