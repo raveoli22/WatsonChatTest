@@ -74,6 +74,7 @@ app.post('/webhook/', function(req, res) {
             if (payload == "view more items"){
                 callYelpApi = true; 
                 offset = offset + 4;
+                sendResponse(sender,"Okay, 4 more coming right up near: " + location);
                 searchYelp(searchQuery,sender,filter,location,offset);
             }
             else {
