@@ -60,7 +60,10 @@ app.post('/webhook/', function(req, res) {
 		if (event.message && event.message.text) {
 			let text = event.message.text;
             getWatson(sender,text);
-		}
+		} else if (event.postback && event.postback.payload){
+            let payload = event.postback.payload; 
+            getAddressOnly(sender,payload);
+        }
 	}
 	res.sendStatus(200);
 });
@@ -169,14 +172,9 @@ function getWatson(idNum,message){
 
 
 //yelp search call for address only 
-function getAddressOnly (sQuery){
-    yelp.search({ term: sQuery, limit: 1})
-	.then( function ( data ) {
-        sendResponse(recipientID,generateBusinessString(data.businesses[0]));
-	})
-	.catch( function ( err ) {
-		console.log( err);
-	});
+function getAddressOnly (recipientID,businessID){
+    var temp = yelp.business.businessID.location.address1; 
+    sendResponse(recipientID,temp);
 };
 
 //yelp search API call for main purposes
@@ -243,7 +241,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[0].name
+                                            payload: businessArray[0].id
                                         }
                                     ]
                                   },
@@ -256,7 +254,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[1].name
+                                            payload: businessArray[1].id
                                         }
                                     ]
                                   },
@@ -269,7 +267,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[2].name
+                                            payload: businessArray[2].id
                                         }
                                     ]
                                   },
@@ -282,7 +280,7 @@ function sendResponseList(recipientID,businessArray){
                                         {
                                             type:  "postback",
                                             title: "Address",
-                                            payload: businessArray[3].name
+                                            payload: businessArray[3].id
                                         }
                                     ]
                                   }
