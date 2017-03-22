@@ -180,11 +180,7 @@ function searchYelp (searchQuery,recipientID,filter,location){
             businessArray.push(business);
             //for each business in businesses, create a string and relay back to user
         });
-        
-        businessArray.forEach(function(business){
-            sendResponse(recipientID,generateBusinessString(business)); 
-            //shows that businessArray is populated correctly
-        });
+        //sendResponse(recipientID,generateBusinessString(business)); 
         sendResponseList(recipientID,businessArray);
 	})
 	.catch( function ( err ) {
@@ -231,12 +227,14 @@ function sendResponseList(recipientID,businessArray){
                                 elements: [
                                   {
                                     title: businessArray[0].name,
-                                    subtitle: "subtitle"
+                                    subtitle: businessArray[0].display_phone,
+                                    image_url: businessArray[0].image_url
                                   },
                                     
                                   {
                                     title: businessArray[1].name,
-                                    subtitle: "subtitle"
+                                    subtitle: businessArray[1].display_phone,
+                                    image_url: businessArray[1].image_url
                                   }
                                 ]    
                             }
