@@ -168,11 +168,11 @@ function getWatson(idNum,message){
     }
 )};
 
-var businessArray = [];
-var businessAddressArray = [];
+
 //yelp search API call
 function searchYelp (searchQuery,recipientID,filter,location){
-    
+    var businessArray = [];
+    var businessAddressArray = [];
     yelp.search( { term: searchQuery, location: location, limit: 5, category_filter: filter } )
 	.then( function ( data ) {
         
