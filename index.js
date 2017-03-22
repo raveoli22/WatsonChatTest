@@ -228,13 +228,27 @@ function sendResponseList(recipientID,businessArray){
                                   {
                                     title: businessArray[0].name,
                                     subtitle: businessArray[0].display_phone,
-                                    image_url: businessArray[0].image_url
+                                    image_url: businessArray[0].image_url,
+                                    buttons: [
+                                        {
+                                            type:  "postback",
+                                            title: "Address",
+                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                        }
+                                    ]
                                   },
                                     
                                   {
                                     title: businessArray[1].name,
                                     subtitle: businessArray[1].display_phone,
-                                    image_url: businessArray[1].image_url
+                                    image_url: businessArray[1].image_url,
+                                    buttons: [
+                                        {
+                                            type:  "postback",
+                                            title: "Address",
+                                            payload: "DEVELOPER_DEFINED_PAYLOAD" 
+                                        }
+                                    ]
                                   }
                                 ]    
                             }
