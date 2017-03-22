@@ -226,11 +226,11 @@ function sendResponseList(recipientID,businessArray,businessAddressArray){
                                 top_element_style: "compact",
                                 elements: [
                                   {
-                                    title: businessAddressArray[0]
+                                    title: "wow"
                                   },
                                     
                                   {
-                                    title: businessAddressArray[1]
+                                    title: "yay"
                                   }
                                 ]    
                             }
