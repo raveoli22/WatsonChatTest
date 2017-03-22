@@ -37,7 +37,7 @@ var location = "";
 var doMath = false;
 var numbs = [];
 var signs = [];
-var sum = 200; 
+var sum = 0; 
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -418,7 +418,7 @@ function Math_is_fun(signs,numbs){
         '*': function (x, y) { return x * y },
     }
     for (var i = 0; i < signs.length; i++){
-        sum = execute[signs[i]](numbs[i],numbs[i+1]);
+        sum = sum + execute[signs[i]](numbs[i],numbs[i+1]);
     }
 };
 
