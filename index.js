@@ -420,8 +420,9 @@ function Math_is_fun(signs,numbs){
         //'/': function (x, y) { return x / y },
         //'*': function (x, y) { return x * y }
     }
-    for (var i = 0; i < signs.length; i++){
-        sum = sum + execute[signs[i]](numbs[i],numbs[i+1]);
+    sum = execute[signs[0]](numbs[0],numbs[1]);
+    for (var i = 1; i < signs.length; i++){
+        sum = execute[signs[i]](sum,numbs[i+1]);
     }
     
 };
